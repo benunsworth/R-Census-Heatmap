@@ -11,10 +11,9 @@ census <- read.socrata("https://opendata.bristol.gov.uk/Health/2011-Census-healt
 # There are a few data cleaning/munging jobs before we can visualise
 
 census <- census[order(census$Very.good.health.rate),]  # Ordered the data by Very.good.health.rate column
-
+row.names(census) <- census$Names  # R automatically numbers rows, this replaces the numbers with values from the column "Names"
 census <- census[,-c(1,2,3,4,6,8,10,12,14)]  # Delete the columns that we don't need - TIP... columns start at "1" not "0" in the R Language
 
-row.names(census) <- census$Names  # R automatically numbers rows, this replaces the numbers with values from the column "Names"
 census <- rename(census, c("Very.good.health.rate"="Very Good", "Good.health.rate"="Good",
  "Fair.health.rate"="Fair", "Bad.health.rate"="Bad", 
  "Very.bad.health.rate"="Very bad"))  # Using the plyr library's "rename" function to give the columns human readable names
